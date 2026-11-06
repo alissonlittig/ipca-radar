@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IPCA Radar — Brazil inflation by group</title>
+<meta name="description" content="Interactive dashboard of Brazil's official inflation (IPCA) by spending group. Open IBGE data, refreshed automatically by a Python ETL.">
+<meta name="theme-color" content="#0b1020">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230b1020'/%3E%3Cpath d='M5 22l7-8 5 5 10-12' fill='none' stroke='%2334d399' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="wrap top-in">
+    <div class="brand">
+      <span class="logo" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22"><path d="M5 22l7-8 5 5 10-12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div><h1>IPCA Radar</h1><p class="sub">Brazil's consumer inflation, group by group</p></div>
+    </div>
+    <p class="stamp" id="stamp" aria-live="polite">Loading data…</p>
+  </div>
+</header>
+
+<main id="main" class="wrap">
+  <section class="controls" aria-label="Filters">
+    <div class="ctl">
+      <span class="lbl" id="l-per">Period</span>
+      <div class="seg" role="radiogroup" aria-labelledby="l-per" id="seg-per">
+        <button role="radio" data-v="12" aria-checked="false">1Y</button>
+        <button role="radio" data-v="36" aria-checked="false">3Y</button>
+        <button role="radio" data-v="60" aria-checked="true">5Y</button>
+        <button role="radio" data-v="0" aria-checked="false">All</button>
+      </div>
+    </div>
+    <div class="ctl">
+      <span class="lbl" id="l-met">Measure</span>
+      <div class="seg" role="radiogroup" aria-labelledby="l-met" id="seg-met">
+        <button role="radio" data-v="acc12" aria-checked="true">12-month</button>
+        <button role="radio" data-v="monthly" aria-checked="false">Monthly</button>
+      </div>
+    </div>
+    <div class="ctl grow">
+      <span class="lbl" id="l-grp">Groups</span>
+      <div class="chips" id="chips" role="group" aria-labelledby="l-grp"></div>
+    </div>
+  </section>
+
+  <section class="kpis" id="kpis" aria-label="Key figures"></section>
+
+  <section class="card" aria-labelledby="h-line">
+    <div class="card-h"><h2 id="h-line">Inflation over time</h2><p class="hint" id="line-hint"></p></div>
+    <div class="chart" id="line"></div>
+    <details class="tbl"><summary>View as table</summary><div class="tbl-w" id="line-tbl"></div></details>
+  </section>
+
+  <div class="two">
+    <section class="card" aria-labelledby="h-bar">
+      <div class="card-h"><h2 id="h-bar">12-month ranking</h2><p class="hint" id="bar-hint"></p></div>
+      <div id="bars"></div>
+    </section>
+    <section class="card" aria-labelledby="h-heat">
+      <div class="card-h"><h2 id="h-heat">Monthly heatmap · last 12 months</h2><p class="hint">% change vs previous month</p></div>
+      <div class="heat-w" id="heat"></div>
+    </section>
+  </div>
+</main>
+
+<footer class="wrap foot">
+  <p>Source: <a href="https://sidra.ibge.gov.br/tabela/7060" rel="noopener">IBGE · SIDRA table 7060</a> (open data). Target band: 3% ± 1.5 p.p. (CMN).</p>
+  <p><a href="https://github.com/alissonlittig/ipca-radar" rel="noopener">Source code</a> · Python ETL + static front, refreshed weekly by GitHub Actions.</p>
+</footer>
+<div class="tip" id="tip" role="presentation" hidden></div>
+<script src="app.js"></script>
+</body>
+</html>
