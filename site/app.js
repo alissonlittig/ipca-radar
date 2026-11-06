@@ -129,7 +129,7 @@
     const col = (v) => {
       if (v == null) return "transparent";
       const t = Math.min(1, Math.abs(v) / 1.5);
-      return v >= 0 ? `rgba(190,40,75,${0.15 + 0.8 * t})` : `rgba(14,150,105,${0.2 + 0.8 * t})`;
+      return v >= 0 ? `rgba(190,40,75,${0.15 + 0.8 * t})` : `rgba(8,110,78,${0.2 + 0.8 * t})`;
     };
     $("#heat").innerHTML = `<table class="heat"><thead><tr><th></th>${idx.map((i) => `<th scope="col">${lab(D.months[i])}</th>`).join("")}</tr></thead><tbody>` +
       G.map((g) => `<tr><th class="r" scope="row" title="${esc(g.name)}">${esc(g.name)}</th>${idx.map((i) => `<td style="background:${col(g.monthly[i])}" title="${esc(g.name)} · ${lab(D.months[i])}: ${fmt(g.monthly[i])}">${g.monthly[i] == null ? "" : (Math.round(g.monthly[i] * 10) / 10 || 0).toFixed(1)}</td>`).join("")}</tr>`).join("") + "</tbody></table>";

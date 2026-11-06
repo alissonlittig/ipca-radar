@@ -73,3 +73,6 @@ details.tbl summary{cursor:pointer;width:max-content;padding:4px 0}
 @media (max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}.two{grid-template-columns:1fr}}
 @media (max-width:480px){.wrap{padding:0 14px}.kpi .v{font-size:1.6rem}.controls{padding:14px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+#kpis{min-height:126px}.chart{min-height:340px}#bars{min-height:560px}.heat-w{min-height:340px}
+@media (max-width:900px){#kpis{min-height:262px}}
+@media (max-width:520px){.chart{min-height:280px}#bars{min-height:600px}}
