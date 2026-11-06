@@ -15,7 +15,7 @@ OUT = Path(__file__).resolve().parent.parent / "site" / "data" / "ipca.json"
 
 def fetch(months: int = 132) -> list:
     url = API.format(n=months)
-    r = requests.get(url, params={"localidades": "N1[all]", "classificacao": f"315[{','.join(map(str, GROUPS))}]"}, timeout=60)
+    r = requests.get(url, params={"localidades": "N1[all]", "classificacao": f"315[{','.join(map(str, GROUPS))}]"}, timeout=20)
     r.raise_for_status()
     return r.json()
 
@@ -58,7 +58,15 @@ def build(df: pd.DataFrame) -> dict:
 
 
 def main() -> int:
-    data = build(to_frame(fetch()))
+    try:
+        raw = fetch()
+    except requests.RequestException as e:
+        # IBGE is unreachable from some cloud IPs: keep the last committed snapshot, but say so loudly.
+        if OUT.exists():
+            print(f"::warning::IBGE API unreachable ({type(e).__name__}); keeping existing {OUT.name}")
+            return 0
+        raise
+    data = build(to_frame(raw))
     if len(data["months"]) < 60:
         print(f"too few months: {len(data['months'])}", file=sys.stderr)
         return 1
